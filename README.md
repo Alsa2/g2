@@ -6,24 +6,35 @@
 
 ## Problem definition
 
+Dr Ruben wants to cook methamphetamine in his room. This process requires fine and precise control over the temperature
+and humidity of the surroundings. He started with a room thermometer but it is hard to manually collect data from the
+thermometer, not to mention the temperature error from the room thermometer affects the predictions and adjustments for
+the cooking process. He wants to be able to measure the temperature and humidity inside the room accurately so he can
+make adjustments accordingly. He also wants the data to be easily comprehensible and accessible. If possible, he would
+like to be able to make predictions for the following 12 hours so he can adjust beforehand as he is not present in the
+room most of the time. As he is new to this topic, he wants to keep the cost as low as possible.
+
 ## Proposed Solution
 
 Considering the client requirements an adequate solution includes a low cost sensing device for humidity and temperature
-and a custom data script that process and anaysis the samples acquired. For a low cost sensing device an adequate
-alternative is the DHT11 sensor[^1] which is offered online for less than 5 USD and provides adequare precision and
+and a custom data script that process and analysis the samples acquired. For a low cost sensing device an adequate
+alternative is the DHT11 sensor[^1] which is offered online for less than 5 USD and provides adequate precision and
 range for the client requirements (Temperature Range: 0°C to 50°C, Humidity Range: 20% to 90%). Similar devices such as
 the DHT22, AHT20 or the AM2301B [^2] have higher specifications, however the DHT11 uses a simple serial communication (
-SPI) rather than more eleborated protocols such as the I2C used by the alternatives. For the range, precision and
-accuracy required in this applicaiton the DHT11 provides the best compromise. Connecting the DHT11 sensor to a computer
+SPI) rather than more elaborated protocols such as the I2C used by the alternatives. For the range, precision and
+accuracy required in this application the DHT11 provides the best compromise. Connecting the DHT11 sensor to a computer
 requires a device that provides a Serial Port communication. A cheap and often used alternative for prototyping is the
 Arduino UNO microcontroller [^3]. "Arduino is an open-source electronics platform based on easy-to-use hardware and
-software"[^4]. In additon to the low cost of the Arduino (< 6USD), this device is programmable and expandable[^1]. Other
-alternatives include diffeerent versions of the original Arduino but their size and price make them a less adequate
+software"[^4]. In addition to the low cost of the Arduino (< 6USD), this device is programmable and expandable[^1].
+Other
+alternatives include different versions of the original Arduino but their size and price make them a less adequate
 solution.
 
-The
-
-**Design statement**
+**Design statement**  We will design and make a poster for the client who is Dr Ruben. The poster will include the
+system diagarma nad visual representation and model of humidity in the said room for 48 hours, and a prediction for the
+subsequent 12 hours. It will present the ideal temperatures and humidity for cooking methamphetamine and health levels
+for humans. This is achieved through with the software Python on a Raspberry Pi SBC(Single Board Computer) with four
+DHT11 sensors. It will take approximately 1 month to complete and will be evaluated according to criterias A,B,C,D
 
 [^1]: Industries, Adafruit. “DHT11 Basic Temperature-Humidity Sensor + Extras.” Adafruit Industries Blog
 RSS, https://www.adafruit.com/product/386.
@@ -71,15 +82,47 @@ raspberry is downloaded to the laptop for analysis and processing.
 
 ## Record of Tasks
 
-| Task No | Planned Action                                                | Planned Outcome                                                                                                 | Time estimate | Target completion date | Criterion |
-|---------|---------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|---------------|------------------------|-----------|
-| 1       | Write the Problem context                        | 10min         | Nov 22                 | A         |
+| Task No | Planned Action            | Planned Outcome | Time estimate | Target completion date | Criterion |
+|---------|---------------------------|-----------------|---------------|------------------------|-----------|
+| 1       | Write the Problem context | 20min           | Nov 22        | Nov 22                 | A         |
+| 2       | ALEX TELL ME WHAT YOU DID |                 |               |                        ||
+| 3       |                           |                 |               |                        ||
+| 4       |                           |                 |               |                        ||
+| 5       |                           |                 |               |                        ||
+| 6       |                           |                 |               |                        ||
+| 7       |                           |                 |               |                        ||
+| 8       |                           |                 |               |                        ||
 
 ## Test Plan
 
+| Description | Type | Inputs | Outputs |
+|-------------|------|--------|---------|
+|             |      |        |         |
+|             |      |        |         |
+|             |      |        |         |
+|             |      |        |         |
+
 # Criteria C: Development
 
+## Existing Tools
+
+| Software/Development Tools | Coding Structure Tools | Libraries |
+|----------------------------|------------------------|-----------|
+| Python                     |                        |           |
+| VS Code                    |                        |           |
+| Terminal                   |                        |           |
+| SSH                        |                        |           |
+
 ## List of techniques used
+
+1. Functions
+2. While Loops
+3. Conditions
+4. JSON formating
+5. HTTP requests
+6. Token Authentication
+7. GPIO Interface
+8. Graph Plotting
 
 ## Development
 
