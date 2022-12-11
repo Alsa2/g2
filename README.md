@@ -116,11 +116,11 @@ raspberry is downloaded to the laptop for analysis and processing.
 *Fig.3* **Flow diagram for the MVP program.**
 
 ### Bash Program to keep alive main program
-![](Assets/Bash_FD.jpg)
+![](Assets/BASH_FD.jpg)
 
 *Fig.4* **Flow diagram for the Bash program.**
 ### Main Program
-![](Assets/Main_FD.jpg)
+![](Assets/MAIN_FD.jpg)
 
 *Fig.5* **Flow diagram for the main program.**
 
