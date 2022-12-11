@@ -54,7 +54,7 @@ Documentation, https://docs.arduino.cc/learn/starting-guide/whats-arduino.
    locations. ```(SL: linear model)```, ```(HL: non-lineal model)```
 3. The solution provides a comparative analysis for the Humidity and Temperature levels for each Local and Remote
    locations including mean, standad deviation, minimum, maximum, and median.
-4. ```(SL)```The Local samples are stored in a csv file and ```(HL)``` posted to the remote server.
+4. ```(SL)```The Local samples are stored in a JSON file and ```(HL)``` posted to the remote server.
 5. Create a prediction the subsequent 12 hours for both temperature and humidity.
 6. A poster summarizing the visual representations, model and analysis is created. The poster includes a recommendation
    about healthy levels for Temperature and Humidity.
@@ -110,7 +110,21 @@ raspberry is downloaded to the laptop for analysis and processing.
 
 ## Flow Diagrams
 
-### Insert Diagrams * 3
+### MVP Program
+![](Assets/MVP_FD.jpg)
+
+*Fig.3* **Flow diagram for the MVP program.**
+
+### Bash Program to keep alive main program
+![](Assets/Bash_FD.jpg)
+
+*Fig.4* **Flow diagram for the Bash program.**
+### Main Program
+![](Assets/Main_FD.jpg)
+
+*Fig.5* **Flow diagram for the main program.**
+
+
 
 ## 	Test Plan
 
