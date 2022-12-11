@@ -204,7 +204,7 @@ In order to validate our concept of creation, we created a MVP as a prototype to
 
 
 
-Link to MVP video: 
+Link to MVP video: [Click Me](https://drive.google.com/file/d/1jyDV30ro8WImT-cAwjz0hzBM_ffVr-dd/view?usp=share_link)
 
 ```py
 #!/usr/bin/python3
@@ -302,10 +302,50 @@ plt.show()
 Humidity:
 
 ```py
-IM WAITING ALEX * 2
+from matplotlib import pyplot as plt
+from matplotlib.gridspec import GridSpec
+import library as u2l
+plt.style.use('dark_background')
+sensors = [23,24,25,26]
+values = []
+for s in sensors:
+    x,smoothed = u2l.smoothing(u2l.get_readings(s)[:])
+    values.append(smoothed)
+
+mean_per_hour = []
+for i in range(len(values[0])):
+    data = [values[n][i] for n in range(4)]
+    mean_per_hour.append(sum(data)/len(sensors))
+print("Ready to plot")
+
+fig=plt.figure(figsize=(12,12))
+gs = GridSpec(4, 4, figure=fig)
+ax = fig.add_subplot(gs[:,0:3])
+plt.title("Average of sensors")
+print(len(x))
+print(len(mean_per_hour))
+print("added 25")
+print(len(x))
+mean_per_hour.append(25)
+values.append(25)
+print(len(mean_per_hour))
+plt.plot(x, mean_per_hour)
+plt.ylim([20,28])
+plt.xlabel("Samples per hour")
+plt.ylabel("%")
+
+for row, my_color in [(0,"#e63946"),(1,"#a8dadc"),(2,"#457b9d"),(3,"#1d3557")]:
+    ax = fig.add_subplot(gs[row,3])
+    x = []
+    for i in range(len(values[row])):
+        x.append(i)
+    plt.plot(x, values[row], color=my_color)
+    plt.title("Sensor "+str(sensors[row]))
+
+plt.show()
 ```
 
-*Graph
+![](Assets/hum4in1.png)
 
 *Fig.7* **Complex Graph for Humidity**
 
