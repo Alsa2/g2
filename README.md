@@ -70,6 +70,8 @@ Arduino microprocessor and the sensor DHT11 conencted to the local computer (Lap
 variables will be requested to the remote server using a GET request to the API of the server
 at ```192.168.6.147/readings```. The local values are stored in a CSV database locally.
 
+## System Diagram HL
+
 ![](sysdim_hl.png)
 
 **Fig.2** shows the system diagram for the proposed solution (**HL**). The indoor variables will be measured using a
@@ -79,6 +81,10 @@ a GET request to the API of the server at ```192.168.6.147/readings```. The loca
 locally and POST to the server using the API and TOKEN authentication. A laptop computer is used for remotely
 controlling the local Rasberry Pi using a Dekptop sharing application (VNC Viewer). (Optional) Data from the local
 raspberry is downloaded to the laptop for analysis and processing.
+
+## Data Storage
+
+We stored our collected into a single JSON with array formatting. The JSON serves as a backup for our data in case the remote server malfunctions and serves as a quicker way to access our own data when we do graphing. Collected data is also uploaded to ```http://192.168.6.142/readings``` everytime data is collected.
 
 ## Record of Tasks
 
@@ -107,6 +113,7 @@ raspberry is downloaded to the laptop for analysis and processing.
 | 21 | Create Scientific Poster | To present the background information, methodologies, materials, results, analysis and conclusion for the client in a clear and easy to understand way | 2 hour | Dec 11 |D|
 | 22 | Beautify README file | To make README file more easily-understandable | 3 hour | Dec 11 |B|
 | 23 | Create Video Demonstration | To make the video in order to demonstrate the solution and the findings | 4 hour |  |D|
+| 24 | Add Computation Thinking Part | To show understanding in Computational Thinking skills | 45min | Dec 12 |B|
 
 ## Flow Diagrams
 
@@ -128,12 +135,15 @@ raspberry is downloaded to the laptop for analysis and processing.
 
 ## 	Test Plan
 
-| Description | Type | Inputs | Outputs |
-|-------------|------|--------|---------|
-|             |      |        |         |
-|             |      |        |         |
-|             |      |        |         |
-|             |      |        |         |
+| Type                | Input                                      | Process                                                      | Anticipated Outcome                                          |
+| ------------------- | ------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Integration Testing | Raspberry Pi, SSH and VS Code              | 1. Download and Install VS Code 2. Open Raspberry Pi as remote in VS Code | VS Code will connect to Raspberry Pi through the SSH protocal |
+| Unit Testing        | Authentication Code, username and password | 1. Run Code                                                  | Program should print the access token obtained from the server with the given username and password |
+| Unit Testing        | Code to obtain data from DHT11s (MVP)      | 1. Run Code 2. Input pin number of sensor (4,17,22,27)when prompted by program | Program will print if the sensor is working, and if it's working, the data from the sensor to the terminal |
+| Performance Testing | MVP Code                                   | 1. Run code. 2. Input pin number of sensor(4,17,22,27) when prompted by program 3. Measure time until output is printed on the terminal | Code will collect data and display an output on the temrinal in 5 seconds |
+| Unit Testing        | Code for writing to JSON files             | 1. Run code.                                                 | Data will be collected from sensors and formatted and finally inserted into the JSON file along with the datetime and sensor_id |
+| Integration Testing | Bash Program and Main Program              | 1. Run code. 2. Wait and see if data is being added to the JSON file every five minutes | Temperature and humidity data from all four sensors should be appended to the same JSON file with datetime |
+| Unit Testing        | Graphing Code                              | 1. Run code. 2. Wait for graph to appear 3. Reference JSON file to compare accuracy of data | Graph and respective statistics should line up with data from JSON file |
 
 # Criteria C: Development
 
@@ -161,7 +171,106 @@ raspberry is downloaded to the laptop for analysis and processing.
 
 ## Computational Thinking
 
-In the initial code and the Minimum Viable Product, we utilized a while loop in order for the code to keep running every five minutes at specific intervals. This solution proved to be inefficient becuase the task of getting readings every 5 minutes for 48 hours straight, which would mean leaving the SSH connection on for the whole time, basically disabling the connected laptop for 2 days which is not feasible. To solve this problem, we first tried using a crontab task that would automatically run the code every 5 minutes. However, due to multiple system issues with our raspberry pi, we attempted multiple times to still no avail. Instead, we resorted to using the while loop and a bash program to make sure the program was running in the background.
+#### Decomposition
+
+In computational thinking, decomposition refers to breaking a complex problem or system into parts that are easier to conceive, understand, program, and maintain. In the part for uploading the data to the server, we broke the problem down to three main aspects: Collecting Data, Formating Data and Pushing Data. Following these three categories, we individually coded each part and made sure it works well together. See snippet of main program below for reference:
+
+```py
+def get_readings(auth):
+    humidity1, temperature1 = Adafruit_DHT.read_retry(11, sensor_1_pin)
+    datetime1 = datetime.datetime.now()
+    humidity2, temperature2 = Adafruit_DHT.read_retry(11, sensor_2_pin)
+    datetime2 = datetime.datetime.now()
+    humidity3, temperature3 = Adafruit_DHT.read_retry(11, sensor_3_pin)
+    datetime3 = datetime.datetime.now()
+    humidity4, temperature4 = Adafruit_DHT.read_retry(11, sensor_4_pin)
+    datetime4 = datetime.datetime.now()
+    
+    humiditys = [humidity1, humidity2, humidity3, humidity4]
+    temperatures = [temperature1, temperature2, temperature3, temperature4]
+    sensortempid = [sensor1tempid, sensor2tempid, sensor3tempid, sensor4tempid]
+    sensorhumidityid = [sensor1humidityid, sensor2humidityid, sensor3humidityid, sensor4humidityid]
+
+    for i in range(4):
+        senddata(temperatures[i], sensortempid[i], auth)
+        senddata(humiditys[i], sensorhumidityid[i], auth)
+
+    average_temp = (temperature1 + temperature2 + temperature3 + temperature4) / 4
+    average_humidity = (humidity1 + humidity2 + humidity3 + humidity4) / 4
+    median_temp = statistics.median([temperature1, temperature2, temperature3, temperature4])
+    median_humidity = statistics.median([humidity1, humidity2, humidity3, humidity4])
+
+    #print nice table
+    print("\r| Sensor | Temperature | Humidity |")
+    print("|--------+-------------+----------|")
+    print("| 1      |"+str(temperature1).center(13)+"|"+str(humidity1).center(10)+"|")
+    print("| 2      |"+str(temperature2).center(13)+"|"+str(humidity2).center(10)+"|")
+    print("| 3      |"+str(temperature3).center(13)+"|"+str(humidity3).center(10)+"|")
+    print("| 4      |"+str(temperature4).center(13)+"|"+str(humidity4).center(10)+"|")
+    print("|--------+-------------+----------|")
+    print("| Average|"+str(average_temp).center(13)+"|"+str(average_humidity).center(10)+"|")
+    print("| Median |"+str(median_temp).center(13)+"|"+str(median_humidity).center(10)+"|")
+    print("|--------+-------------+----------|\r")
+
+
+    reading = {
+        "datetime": str(datetime.datetime.now()),
+        "average_temp": average_temp,
+        "average_humidity": average_humidity,
+        "median_temp": median_temp,
+        "median_humidity": median_humidity,
+        "readings": [
+            {
+                "temperature": temperature1,
+                "humidity": humidity1,
+                "sensor_id": 1,
+                "datetime": str(datetime1)
+            },
+            {
+                "temperature": temperature2,
+                "humidity": humidity2,
+                "sensor_id": 2,
+                "datetime": str(datetime2)
+            },
+            {
+                "temperature": temperature3,
+                "humidity": humidity3,
+                "sensor_id": 3,
+                "datetime": str(datetime3)
+            },
+            {
+                "temperature": temperature4,
+                "humidity": humidity4,
+                "sensor_id": 4,
+                "datetime": str(datetime4)
+            }
+        ]
+        }
+
+    return reading
+```
+
+
+
+#### Pattern recognition, generalization and abstraction
+
+When plotting graphs and dealing with data smoothing and statistical calculations, we noticed that there's a lot of repeated code used to take data out from different sensors and similar calculations. This made the main program very cluttered, inefficient and hard to debug. To resolve these issues, we chose to start a library to store the code to smooth data and calculate statistics to reduce the code repetition in the main program and improve overall efficiency of our program. This is shown below with a part of library code:
+
+```py
+def smoothing(data:list, size_window:int=12) -> list:
+    x = []
+    y = []
+    for i in range(0, len(data), size_window):
+        #print(data[i:i+size_window])
+        segment_mean = sum(data[i:i+size_window])/size_window
+        y.append(segment_mean)
+        x.append(i)
+    return x, y
+```
+
+#### Algorithms
+
+In the initial code and the Minimum Viable Product, we utilized a while loop in order for the code to keep running every five minutes at specific intervals. This solution proved to be inefficient becuase the task of getting readings every 5 minutes for 48 hours straight, which would mean leaving the SSH connection on for the whole time, basically disabling the connected laptop for 2 days which is not feasible. To solve this problem, we first tried using a crontab task that would automatically run the code every 5 minutes. However, due to multiple system issues with our Raspberry Pi, we attempted multiple times to still no avail. Instead, we resorted to using the while loop and a bash program to make sure the program was running in the background.
 
 #### Bash Program
 
