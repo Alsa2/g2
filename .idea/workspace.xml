@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c421b6d8-7bf5-415f-8e34-c583e72dccd0" name="Changes" comment="2022-12-11 dayhalf2" />
+    <list default="true" id="c421b6d8-7bf5-415f-8e34-c583e72dccd0" name="Changes" comment="2022-12-11 dayhalf3">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,6 +40,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Assets" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -63,6 +66,7 @@
       <workItem from="1670551466853" duration="49000" />
       <workItem from="1670551527397" duration="598000" />
       <workItem from="1670734312047" duration="1777000" />
+      <workItem from="1670738456287" duration="330000" />
     </task>
     <task id="LOCAL-00001" summary="intial">
       <created>1669074726609</created>
@@ -92,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670736174045</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="2022-12-11 dayhalf3">
+      <created>1670738483128</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1670738483128</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,6 +125,7 @@
     <MESSAGE value="2022-12-05 dayend" />
     <MESSAGE value="2022-12-11 dayhalf" />
     <MESSAGE value="2022-12-11 dayhalf2" />
-    <option name="LAST_COMMIT_MESSAGE" value="2022-12-11 dayhalf2" />
+    <MESSAGE value="2022-12-11 dayhalf3" />
+    <option name="LAST_COMMIT_MESSAGE" value="2022-12-11 dayhalf3" />
   </component>
 </project>

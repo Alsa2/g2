@@ -108,7 +108,11 @@ raspberry is downloaded to the laptop for analysis and processing.
 | 22 | Beautify README file | To make README file more easily-understandable | 3 hour | Dec 11 |B|
 | 23 | Create Video Demonstration | To make the video in order to demonstrate the solution and the findings | 4 hour |  |D|
 
-# 	Test Plan
+## Flow Diagrams
+
+### Insert Diagrams * 3
+
+## 	Test Plan
 
 | Description | Type | Inputs | Outputs |
 |-------------|------|--------|---------|
@@ -293,6 +297,8 @@ plt.show()
 
 ![](Assets/temp4in1.png)
 
+*Fig.6* **Complex Graph for Temperature**
+
 Humidity:
 
 ```py
@@ -300,6 +306,8 @@ IM WAITING ALEX * 2
 ```
 
 *Graph
+
+*Fig.7* **Complex Graph for Humidity**
 
 #### Polynomial fit w/ predictions
 
@@ -311,7 +319,7 @@ Temperature:
 IM WAITING ALEX * 3
 ```
 
-*Graph
+*Fig.8* **Polyfit Graph for Temperature**
 
 Humidity:
 
@@ -320,6 +328,8 @@ IM WAITING ALEX * 4
 ```
 
 *Graph
+
+*Fig.9* **Polyfit Graph for Humidity**
 
 #### Errors bars and other statistical data
 
@@ -331,7 +341,7 @@ Temperature:
 IM WAITING ALEX * 5
 ```
 
-*Graph
+*Fig.10* **Error Bar Graph for Temperature**
 
 Humidity:
 
@@ -341,11 +351,15 @@ IM WAITING ALEX * 6
 
 *Graph
 
+*Fig.11* **Error Bar Graph for Humidity**
+
 # Criteria D: Functionality
 
 ## Scientific Poster
 
 *Insert Poster
+
+*Fig.12* **Scientific Poster documenting the objective, methodologies and conclusions of our Weather Station project**
 
 ## Demonstration Video
 
