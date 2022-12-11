@@ -16,7 +16,7 @@ room most of the time. As he is new to this topic, he wants to keep the cost as 
 
 ## Proposed Solution
 
-Considering the client requirements an adequate solution includes a low cost sensing device for humidity and temperature
+Considering the client's requirements an adequate solution includes a low cost sensing device for humidity and temperature
 and a custom data script that process and analysis the samples acquired. For a low cost sensing device an adequate
 alternative is the DHT11 sensor[^1] which is offered online for less than 5 USD and provides adequate precision and
 range for the client requirements (Temperature Range: 0°C to 50°C, Humidity Range: 20% to 90%). Similar devices such as
@@ -223,8 +223,101 @@ while True:
             print("Sensor pin "+tocheck+" not working")
 ```
 
+#### Registration of sensors on server
 
+Authenticating and creating 8 sensors. Code is as follows:
+
+```py
+import requests
+
+user = {"username": "xxx", 'password':'xxxxxxxx'}
+#for security reasons, the username and passwords are masked!
+
+req = requests.post('http://192.168.6.142/login', json=user)
+access_token = req.json()["access_token"]
+print(access_token)
+access_token = req.json()["access_token"]
+auth = {"Authorization": f"Bearer {access_token}"}
+
+for i in range(8):
+    if i < 5:
+        new_sensor ={ "type": "Temperature","location": "R2-10B", "name": ("sensor_alex_bern"+str(i)),"unit":"C" }
+    else:
+        new_sensor ={ "type": "Humidity","location": "R2-10B", "name": ("sensor_alex_bern"+str(i)),"unit":"%" }
+    r = requests.post('http://192.168.6.142/sensor/new', json=new_sensor, headers=auth)
+    print(r.json())
+```
+
+
+
+#### Complex Graphs - 4+1 Data representation
+
+After much consideration, we decided to present the data in a way where the average of the four sensors can be viewed. The code plots the graphs of smoothed data from all 4 sensors and a larger graph of the average temperature datas. Refer to the code and graphs below:
+
+
+
+Temperature:
+
+```py
+IM WAITING ALEX
+```
+
+*Graph
+
+Humidity:
+
+```py
+IM WAITING ALEX * 2
+```
+
+*Graph
+
+#### Polynomial fit w/ predictions
+
+This piece code aims to plot the smoothed average data from the sensors and plot a polynomial fit for said data. This also predicts dta for 12 hours after the collected data ends. Refer to the code and graphs below:
+
+Temperature:
+
+```py
+IM WAITING ALEX * 3
+```
+
+*Graph
+
+Humidity:
+
+```py
+IM WAITING ALEX * 4
+```
+
+*Graph
+
+#### Errors bars and other statistical data
+
+This part of the code calculates the maximum, minimum and mean values of the plotted data, and indicates the vales with a line which is parallel to the x-axis. This code also includes plots error bars to indicate the standard deviation of the data. Refer to code and graphs below
+
+Temperature:
+
+```py
+IM WAITING ALEX * 5
+```
+
+*Graph
+
+Humidity:
+
+```py
+IM WAITING ALEX * 6
+```
+
+*Graph
 
 # Criteria D: Functionality
+
+## Scientific Poster
+
+*Insert Poster
+
+## Demonstration Video
 
 A 7 min video demonstrating the proposed solution with narration
