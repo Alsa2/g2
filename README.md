@@ -153,10 +153,10 @@ We stored our collected into a single JSON with array formatting. The JSON serve
 | -------------------------- | ---------------------- | ------------ |
 | Python                     | For Loops              | datetime     |
 | VS Code                    | API requests           | requests     |
-| Terminal                   | Functions              | Sys          |
+| Terminal                   | Functions              | Time         |
 | SSH                        | JSON file              | Adafruit_DHT |
-|                            |                        | Json         |
-|                            |                        | Time         |
+| Bash                       |                        | Json         |
+|                            |                        |              |
 
 ## List of techniques used
 
