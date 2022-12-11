@@ -34,7 +34,7 @@ solution.
 system diagarma nad visual representation and model of humidity in the said room for 48 hours, and a prediction for the
 subsequent 12 hours. It will present the ideal temperatures and humidity for cooking methamphetamine and health levels
 for humans. This is achieved through with the software Python on a Raspberry Pi SBC(Single Board Computer) with four
-DHT11 sensors. It will take approximately 1 month to complete and will be evaluated according to criterias A,B,C,D
+DHT11 sensors. It will take approximately 1 month to complete and will be evaluated according to criterias below
 
 [^1]: Industries, Adafruit. “DHT11 Basic Temperature-Humidity Sensor + Extras.” Adafruit Industries Blog
 RSS, https://www.adafruit.com/product/386.
@@ -84,16 +84,31 @@ raspberry is downloaded to the laptop for analysis and processing.
 
 | Task No | Planned Action            | Planned Outcome | Time estimate | Target completion date | Criterion |
 |---------|---------------------------|-----------------|---------------|------------------------|-----------|
-| 1       | Write the Problem context | 20min           | Nov 22        | Nov 22                 | A         |
-| 2       | ALEX TELL ME WHAT YOU DID |                 |               |                        ||
-| 3       |                           |                 |               |                        ||
-| 4       |                           |                 |               |                        ||
-| 5       |                           |                 |               |                        ||
-| 6       |                           |                 |               |                        ||
-| 7       |                           |                 |               |                        ||
-| 8       |                           |                 |               |                        ||
+| 1       | Write the Problem context | To have a clear and defined goal to achieve and what the client wants | 20min    | Nov 22                 | A         |
+| 2       | Create BOM(Bill of Materials) | Compile a list of necessary materials | 10min | Nov 22 |A|
+| 3       | Finalize Design Statement | To have a clear outline of final goal of our project and tasks that need to completed | 30min | Nov 22 |A|
+| 4       | Collect materials and sign Scope of Work document | To aquire all materials in order to achieve project goal and sign document stating materials taken and intended use. | 20min | Nov 29 |A|
+| 5       | Install necessary software for development | Prepare computer and Raspberry Pi for coding | 45min | Nov 29 |A|
+| 6       | Test run of equipment | To make sure sensors and raspberry pi are working properly. | 60min | Nov 29 |B|
+| 7       | Construction of Weather Station | To have the physical part of the weather station prepared | 30min | Nov 29 |B|
+| 8       | Create MVP (Minimum Viable Product) | To test most base level function of the product and validate the concept before moving on to coding for the final product | 60min | Nov 29 |C|
+| 9 | Register user to server and obtain access token | To create user with secure username and password in order to have elevated access to the server. Access token allows to post to server | 5min | Dec 01 |C|
+| 10 | Create code to obtain temperature and humidity data from DHT11s | To be able to collect data from the sensors at an interval of 5 minutes | 30min | Dec 01 |C|
+| 11 | Create code that saves collected data to JSON file and sends to server | To be able to have a local backup of data and then post the results to the server | 30min | Dec 01 |C|
+| 12 | Create code to obtain data from the school sensors | To be able to get data from the school sensor for future graphing and comparisons | 15min | Dec 01 |C|
+| 13 | Create Bash Program to keep alive program | To have a failsafe when the main program fails to stop the loop | 15min | Dec 01 |C|
+| 14 | Replace malfunctioning sensors | To replace broken down sensors with functioning one | 5min | Dec 06 |C|
+| 15 | Test run of replaced parts | To make sure that the replaced parts are functioning correctly | 15min | Dec 06 |B|
+| 16 | Run program for 48 hours in order to collect needed data in R2-10B | Obtain temperature and humidity data from R2-10B for 48 hours at 5 minute intervals | 48 hours | Dec 06-07 |C|
+| 17 | Create flow diagrams for interesting aspects of the code | To clearly display the functions used in the program | 2 hours | Dec 08 |B|
+| 18 | Create code for graphing the room data and school data | To be able to visualize the collected data and prepare for linear fit functions | 45min | Dec 11 |C|
+| 19 | Include more data into graph | To plot smoothed data with additional stats like min, max, mean and error bars and also polynomial functions for predictions | 1 hour | Dec 11 |C|
+| 20 | Video Outline | To organize what needs to be included in the video | 1 hour | Dec 11 |D|
+| 21 | Create Scientific Poster | To present the background information, methodologies, materials, results, analysis and conclusion for the client in a clear and easy to understand way | 2 hour | Dec 11 |D|
+| 22 | Beautify README file | To make README file more easily-understandable | 3 hour | Dec 11 |B|
+| 23 | Create Video Demonstration | To make the video in order to demonstrate the solution and the findings | 4 hour |  |D|
 
-## Test Plan
+# 	Test Plan
 
 | Description | Type | Inputs | Outputs |
 |-------------|------|--------|---------|
@@ -106,12 +121,14 @@ raspberry is downloaded to the laptop for analysis and processing.
 
 ## Existing Tools
 
-| Software/Development Tools | Coding Structure Tools | Libraries |
-|----------------------------|------------------------|-----------|
-| Python                     |                        |           |
-| VS Code                    |                        |           |
-| Terminal                   |                        |           |
-| SSH                        |                        |           |
+| Software/Development Tools | Coding Structure Tools | Libraries    |
+| -------------------------- | ---------------------- | ------------ |
+| Python                     | For Loops              | datetime     |
+| VS Code                    | API requests           | requests     |
+| Terminal                   | Functions              | Sys          |
+| SSH                        | JSON file              | Adafruit_DHT |
+|                            |                        | Json         |
+|                            |                        | Time         |
 
 ## List of techniques used
 
@@ -124,7 +141,89 @@ raspberry is downloaded to the laptop for analysis and processing.
 7. GPIO Interface
 8. Graph Plotting
 
+## Computational Thinking
+
+In the initial code and the Minimum Viable Product, we utilized a while loop in order for the code to keep running every five minutes at specific intervals. This solution proved to be inefficient becuase the task of getting readings every 5 minutes for 48 hours straight, which would mean leaving the SSH connection on for the whole time, basically disabling the connected laptop for 2 days which is not feasible. To solve this problem, we first tried using a crontab task that would automatically run the code every 5 minutes. However, due to multiple system issues with our raspberry pi, we attempted multiple times to still no avail. Instead, we resorted to using the while loop and a bash program to make sure the program was running in the background.
+
+#### Bash Program
+
+```bash
+source "/home/dev/Program/venv/bin/activate" && python3 "/home/dev/Program/main-loop.py" > /home/dev/Program/logger.log
+output=$(ps -aux | grep python3)
+while true
+do
+if [[ $output != *"main-loop.py"* ]]
+then
+source "/home/dev/Program/venv/bin/activate" && python3 "/home/dev/Program/main-loop.py" > /home/dev/Program/logger.log
+fi
+sleep 5
+done
+```
+
+This program checks if the main program is running, and automatically restarts the program if it's not.
+
 ## Development
+
+Below are the key parts of code development for the project
+
+####  Libraries
+
+To reduce the lines of repetitve, we included frequently used functions into a library to improve code readbility and simplicity.
+
+```py
+import requests
+
+def get_readings(id:int, url:str="http://192.168.6.142/readings") -> list:
+    req = requests.get(url)
+    data = req.json()
+    readings = data["readings"][0]
+    temp = []
+    for sample in readings:
+        if sample["sensor_id"] == id:
+            temp.append(sample["value"])
+    return temp
+
+def smoothing(data:list, size_window:int=12) -> list:
+    x = []
+    y = []
+    for i in range(0, len(data), size_window):
+        #print(data[i:i+size_window])
+        segment_mean = sum(data[i:i+size_window])/size_window
+        y.append(segment_mean)
+        x.append(i)
+    return x, y
+```
+
+#### MVP - Minimum Viable Product
+
+In order to validate our concept of creation, we created a MVP as a prototype to make sure our concept is reliable and achievable. The MVP code gets data from each sensor and displays the output in the terminal. Please refer to the code below:
+
+
+
+Link to MVP video: 
+
+```py
+#!/usr/bin/python3
+import sys
+import Adafruit_DHT
+autocheck = ""
+autocheck = str(autocheck)
+
+while True:
+    if autocheck != "":
+        Adafruit_DHT.read_retry(11, autocheck)
+    else:
+        tocheck = input("Enter sensor number to check: ")
+        if Adafruit_DHT.read_retry(11, tocheck) is not None:
+            print("Sensor pin "+tocheck+" is connected")
+            h, t = Adafruit_DHT.read_retry(11, tocheck)
+            print("Temperature: "+str(t)+"C")
+            print("Humidity: "+str(h)+"%")
+        else:
+            print("Sensor pin "+tocheck+" not working")
+```
+
+
 
 # Criteria D: Functionality
 
