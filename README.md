@@ -635,7 +635,7 @@ Humidity:
 
 ## Scientific Poster
 
-![](Assets/CS_Unit2_Poster.png)
+![](Assets/CS_Unit2_Poster_v2.png)
 
 *Fig.12* **Scientific Poster documenting the objective, methodologies and conclusions of our Weather Station project**
 
