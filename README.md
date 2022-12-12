@@ -1,4 +1,4 @@
-![weather.png](HKWeatherStation.jpeg)
+![weather.png](Assets/HKWeatherStation.jpeg)
 
 # Unit 2: A Distributed Weather Station for ISAK
 
@@ -63,7 +63,7 @@ Documentation, https://docs.arduino.cc/learn/starting-guide/whats-arduino.
 
 ## System Diagram **SL**
 
-![](sysdim_sl.png)
+![](Assets/sysdim_sl.png)
 
 **Fig.1** shows the system diagram for the proposed solution (**SL**). The indoor variables will be measured using an
 Arduino microprocessor and the sensor DHT11 conencted to the local computer (Laptop) located inside a room. The outdoor
@@ -72,7 +72,7 @@ at ```192.168.6.147/readings```. The local values are stored in a CSV database l
 
 ## System Diagram HL
 
-![](sysdim_hl.png)
+![](Assets/sysdim_hl.png)
 
 **Fig.2** shows the system diagram for the proposed solution (**HL**). The indoor variables will be measured using a
 Raspberry PI and four DHT11 sensors located inside a room. Four sensors are used to determine more precisely the
@@ -635,7 +635,7 @@ Humidity:
 
 ## Scientific Poster
 
-*Insert Poster
+![](Assets/CS_Unit2_Poster.png)
 
 *Fig.12* **Scientific Poster documenting the objective, methodologies and conclusions of our Weather Station project**
 
