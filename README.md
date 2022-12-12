@@ -522,13 +522,13 @@ plt.show()
 
 Temperature:
 
-![](Assets/Temperature-Scatter-Poly-Local.png)
+![](Assets/School_vs_room_temperature.png)
 
 *Fig.8* **Polyfit Graph for Temperature**
 
 Humidity:
 
-![](Assets/Humidity-Scatter-Poly-Local.png)
+![](Assets/School_vs_room_humidity.png)
 
 *Fig.9* **Polyfit Graph for Humidity**
 
