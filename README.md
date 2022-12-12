@@ -114,6 +114,7 @@ We stored our collected into a single JSON with array formatting. The JSON serve
 | 22 | Beautify README file | To make README file more easily-understandable | 3 hour | Dec 11 |B|
 | 23 | Create Video Demonstration | To make the video in order to demonstrate the solution and the findings | 4 hour |  |D|
 | 24 | Add Computation Thinking Part | To show understanding in Computational Thinking skills | 45min | Dec 12 |B|
+| 25 | Finalize Poster and README | To make sure each document comphrehends with one another | 2hour | Dec 13 |B|
 
 ## Flow Diagrams
 
@@ -212,7 +213,7 @@ def get_readings(auth):
     print("| Median |"+str(median_temp).center(13)+"|"+str(median_humidity).center(10)+"|")
     print("|--------+-------------+----------|\r")
 
-
+#JSON Formatting
     reading = {
         "datetime": str(datetime.datetime.now()),
         "average_temp": average_temp,
@@ -298,8 +299,6 @@ Below are the key parts of code development for the project
 To reduce the lines of repetitve, we included frequently used functions into a library to improve code readbility and simplicity.
 
 ```py
-import requests
-
 def get_readings(id:int, url:str="http://192.168.6.142/readings") -> list:
     req = requests.get(url)
     data = req.json()
@@ -309,7 +308,6 @@ def get_readings(id:int, url:str="http://192.168.6.142/readings") -> list:
         if sample["sensor_id"] == id:
             temp.append(sample["value"])
     return temp
-
 def smoothing(data:list, size_window:int=12) -> list:
     x = []
     y = []
@@ -328,9 +326,6 @@ In order to validate our concept of creation, we created a MVP as a prototype to
 Link to MVP video: [Click Me](https://drive.google.com/file/d/1jyDV30ro8WImT-cAwjz0hzBM_ffVr-dd/view?usp=share_link)
 
 ```py
-#!/usr/bin/python3
-import sys
-import Adafruit_DHT
 autocheck = ""
 autocheck = str(autocheck)
 
@@ -353,8 +348,6 @@ while True:
 Authenticating and creating 8 sensors. Code is as follows:
 
 ```py
-import requests
-
 user = {"username": "xxx", 'password':'xxxxxxxx'}
 #for security reasons, the username and passwords are masked!
 
@@ -384,9 +377,6 @@ After much consideration, we decided to present the data in a way where the aver
 Temperature:
 
 ```py
-from matplotlib import pyplot as plt
-from matplotlib.gridspec import GridSpec
-import library as u2l
 sensors = [28,29,30,31]
 values = []
 for s in sensors:
@@ -423,9 +413,6 @@ plt.show()
 Humidity:
 
 ```py
-from matplotlib import pyplot as plt
-from matplotlib.gridspec import GridSpec
-import library as u2l
 plt.style.use('dark_background')
 sensors = [23,24,25,26]
 values = []
@@ -531,6 +518,8 @@ Humidity:
 ![](Assets/School_vs_room_humidity.png)
 
 *Fig.9* **Polyfit Graph for Humidity**
+
+For both Fig.9 and Fig.10 above, we chose the **3rd degree polynomial** to fit our data because we tried a lot of different polynomial (2-degree/4-degree/6-degree) and Fig.9 provided the perfect balance between number of point it adjusts for and the ending direction of the graph. Theoretically, if we wanted to make the polynomial fit the graph at every point of data(in a sense more accurate predictions in a vacuum with perfect data), but that would become a situation known as "overfitting" which is over-accomodating for the variations of the data and over-specifying on the difference between each data point, and thus making it not a prediction but rather just a line graph. After all these consideration, we ended up with 3rd degree polynomial.
 
 #### Errors bars and other statistical data
 
