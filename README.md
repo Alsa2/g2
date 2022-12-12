@@ -325,8 +325,6 @@ def smoothing(data:list, size_window:int=12) -> list:
 
 In order to validate our concept of creation, we created a MVP as a prototype to make sure our concept is reliable and achievable. The MVP code gets data from each sensor and displays the output in the terminal. Please refer to the code below:
 
-
-
 Link to MVP video: [Click Me](https://drive.google.com/file/d/1jyDV30ro8WImT-cAwjz0hzBM_ffVr-dd/view?usp=share_link)
 
 ```py
@@ -472,25 +470,65 @@ plt.show()
 
 *Fig.7* **Complex Graph for Humidity**
 
-#### Polynomial fit w/ predictions
+#### Polynomial fit w/ predictions 
 
 This piece code aims to plot the smoothed average data from the sensors and plot a polynomial fit for said data. This also predicts dta for 12 hours after the collected data ends. Refer to the code and graphs below:
 
+```py
+#Only code for temperature shown here for simplicity purposes
+req = requests.get("http://192.168.6.142/readings")
+data = req.json()
+readings = data["readings"][0]
+sensor_id_1 = 23
+sensor_id_2 = 24
+sensor_id_3 = 25
+sensor_id_4 = 26
+window = 6
+window *= 4 # there is four sensors
+fig_width= 15
+fig_height= 25
+
+samples = []
+temp = []
+
+for sample in readings:
+    if sample["sensor_id"] == sensor_id_1 or sample["sensor_id"] == sensor_id_2 or sample["sensor_id"] == sensor_id_3 or sample["sensor_id"] == sensor_id_4:
+        temp.append(sample["value"])
+
+for i in range(0, len(temp), window):
+    segment_mean = sum(temp[i:i+window])/window
+    samples.append(segment_mean)
+
+humidity_samplesples = samples
+
+for i in range(len(humidity_samplesples)):
+    if humidity_samplesples[i] < 20:
+        humidity_samplesples[i] = 20
+
+xhum = []
+for i in range(len(humidity_samplesples)):
+    xhum.append(i*(window/4))
+
+phumidity = np.poly1d(np.polyfit(xhum, humidity_samplesples, 3))
+
+plt.title('Humidity Predictions')
+plt.xlabel('Smooth measurement number')
+plt.ylabel('Humidity (%)')
+
+plt.plot(xhum, humidity_samplesples, 'o', xhum, phumidity(xhum), '-')
+
+plt.show()
+```
+
 Temperature:
 
-```py
-IM WAITING ALEX * 3
-```
+![](Assets/Temperature-Scatter-Poly-Local.png)
 
 *Fig.8* **Polyfit Graph for Temperature**
 
 Humidity:
 
-```py
-IM WAITING ALEX * 4
-```
-
-*Graph
+![](Assets/Humidity-Scatter-Poly-Local.png)
 
 *Fig.9* **Polyfit Graph for Humidity**
 
@@ -498,21 +536,98 @@ IM WAITING ALEX * 4
 
 This part of the code calculates the maximum, minimum and mean values of the plotted data, and indicates the vales with a line which is parallel to the x-axis. This code also includes plots error bars to indicate the standard deviation of the data. Refer to code and graphs below
 
-Temperature:
+Code :
 
 ```py
-IM WAITING ALEX * 5
+#Only code for Temperature shown here for simplicity purposes
+req = requests.get("http://192.168.6.142/readings")
+data = req.json()
+readings = data["readings"][0]
+sensor_id_1 = 23
+sensor_id_2 = 24
+sensor_id_3 = 25
+sensor_id_4 = 26
+window = 36
+window *= 4 # there is four sensors
+fig_width= 15
+fig_height= 25
+
+samples = []
+temp = []
+
+for sample in readings:
+    if sample["sensor_id"] == sensor_id_1 or sample["sensor_id"] == sensor_id_2 or sample["sensor_id"] == sensor_id_3 or sample["sensor_id"] == sensor_id_4:
+        temp.append(sample["value"])
+
+humidity_samplespleslocal = samples
+
+for i in range(len(humidity_samplespleslocal)):
+    if humidity_samplespleslocal[i] < 20:
+        humidity_samplespleslocal[i] = 20
+
+xhum = []
+for i in range(len(humidity_samplespleslocal)):
+    xhum.append(i*(window/4))
+
+low = []
+for i in range(len(humidity_samplespleslocal)):
+    low.append(humidity_samplespleslocal[i] - 5)
+
+high = []
+for i in range(len(humidity_samplespleslocal)):
+    high.append(humidity_samplespleslocal[i] + 5)
+
+
+mean = []
+standard_deviation = []
+for i in range(len(humidity_samplespleslocal)):
+    data = [humidity_samplespleslocal[i], low[i], high[i]]
+    mean.append(np.mean(data))
+    standard_deviation.append(np.std(data))
+
+for i in range(0, len(temp), window):
+    segment_mean = sum(temp[i:i+window])/window
+    samples.append(segment_mean)
+
+
+# max value of the readings
+max_value = max(humidity_samplespleslocal)
+# min value of the readings
+min_value = min(humidity_samplespleslocal)
+# average value of the readings
+average_value = sum(humidity_samplespleslocal)/len(humidity_samplespleslocal)
+
+plt.figure(figsize=(fig_width,fig_height))
+plt.subplot(4,1,1)
+plt.plot(xhum, humidity_samplespleslocal, 'o', color="lightblue")
+plt.title("Local Humidity")
+plt.errorbar(xhum , humidity_samplespleslocal, yerr=5, fmt='o', color="lightblue")
+plt.text(600, 19, """20 is the minimum value of the sensor""", fontsize=10, color='r')
+plt.ylabel("Average Humidity(%)")
+plt.xlabel("Values")
+plt.fill_between(xhum, low, high, color='lightblue', alpha=0.5)
+plt.axhline(y=max_value, color='r', linestyle='-')
+plt.axhline(y=min_value, color='r', linestyle='-')
+plt.axhline(y=average_value, color='r', linestyle='-')
+plt.text(-20, (max_value), """Max value: {}""".format(round(max_value, 2)), fontsize=10, color='r')
+plt.text(-20, (min_value), """Min value: {}""".format(round(min_value, 2)), fontsize=10, color='r')
+plt.text(-20, (average_value), """Average value: {}""".format(round(average_value, 2)), fontsize=10, color='r')
+plt.axhline(y=20, color='r', linestyle='-')
+
+plt.show()
 ```
+
+Temperature:
+
+![](Assets/stats_errorbar_fillbetween_room_temperature.jpg)
+![](Assets/stats_errorbar_fillbetween_school_temperature.jpg)
 
 *Fig.10* **Error Bar Graph for Temperature**
 
 Humidity:
 
-```py
-IM WAITING ALEX * 6
-```
-
-*Graph
+![](Assets/stats_errorbar_fillbetween_local_humidity.jpg)
+![](Assets/stats_errorbar_fillbetween_school_humidity.jpg)
 
 *Fig.11* **Error Bar Graph for Humidity**
 
