@@ -652,4 +652,6 @@ Humidity:
 
 ## Demonstration Video
 
+[Click me for video](https://drive.google.com/file/d/1GmwdQt0yjFDf3hosw5D9RC9QX3AQRD94/view?usp=share_link)
+
 A 7 min video demonstrating the proposed solution with narration
